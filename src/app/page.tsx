@@ -98,7 +98,7 @@ export default function Home() {
   const handleFeedback = async (index: number, value: "yes" | "no") => {
     const schedule = results[index];
     try {
-      await fetch("http://localhost:8000/update-feedback", {
+      await fetch(process.env.NEXT_PUBLIC_API_ENDPOINT + 'update-feedback', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
