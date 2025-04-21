@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import * as XLSX from 'xlsx';
 import Papa from 'papaparse';
+import type { ParseResult } from 'papaparse';
 
 type WigData = {
   date: string;
@@ -31,10 +32,10 @@ export default function ForecastPage() {
       Papa.parse(file, {
         header: true,
         skipEmptyLines: true,
-        complete: (results) => {
-          const parsed: WigData[] = results.data.map((row: any) => ({
-            date: row['日付'],
-            count: parseFloat(row['WIG本数（40HQ換算）']) || 0,
+        complete: (results: ParseResult<Record<string, unknown>>) => {
+          const parsed: WigData[] = results.data.map((row) => ({
+            date: String(row['日付']), // ✅ これで 'unknown' → 'string' 変換OK
+            count: parseFloat(String(row['WIG本数（40HQ換算）'] ?? "0")) || 0,
           }));
           setWigData(parsed);
         },
@@ -46,10 +47,10 @@ export default function ForecastPage() {
           const data = new Uint8Array(e.target?.result as ArrayBuffer);
           const workbook = XLSX.read(data, { type: 'array' });
           const sheet = workbook.Sheets[workbook.SheetNames[0]];
-          const json = XLSX.utils.sheet_to_json(sheet);
-          const parsed: WigData[] = json.map((row: any) => ({
-            date: row['日付'],
-            count: parseFloat(row['WIG本数（40HQ換算）']) || 0,
+          const json = XLSX.utils.sheet_to_json<Record<string, unknown>>(sheet);
+          const parsed: WigData[] = json.map((row: Record<string, unknown>) => ({
+            date: String(row['日付']),
+            count: parseFloat(String(row['WIG本数（40HQ換算）'] ?? "0")),
           }));
           setWigData(parsed);
         } catch (err) {
