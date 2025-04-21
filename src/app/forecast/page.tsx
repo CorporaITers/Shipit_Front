@@ -54,6 +54,7 @@ export default function ForecastPage() {
           }));
           setWigData(parsed);
         } catch (err) {
+          console.error(err); // ✅ これで unused でなくなる
           alert('Excelの読み込み中にエラーが発生しました');
         }
       };
