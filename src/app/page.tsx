@@ -4,6 +4,17 @@ import React from "react";
 import { useEffect, useState } from "react";
 import Script from 'next/script';
 
+type ScheduleResult = {
+  company: string;
+  vessel: string;
+  fare: string;
+  etd: string;
+  eta: string;
+  schedule_url?: string;
+  raw_response: string;
+  status?: string; // 任意（optional）
+};
+
 const DEPARTURE_DESTINATION_MAP: Record<string, string[]> = {
   Kobe: ["Shanghai", "Singapore", "Los Angeles", "Rotterdam", "Hamburg", "Dubai", "New York", "Hong Kong", "Busan", "Sydney"],
   Osaka: ["Shanghai", "Singapore", "Los Angeles", "Rotterdam", "Hamburg", "Dubai", "New York", "Hong Kong", "Busan", "Sydney"],
@@ -18,13 +29,12 @@ export default function Home() {
   const [etd, setEtd] = useState("");
   const [availableDestinations, setAvailableDestinations] = useState<string[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [results, setResults] = useState<any[]>([]);
+  const [results, setResults] = useState<ScheduleResult[]>([]);
   const [error, setError] = useState("");
   const [feedbackSentMap, setFeedbackSentMap] = useState<Record<string, boolean>>({});
   const [showRawMap, setShowRawMap] = useState<Record<string, boolean>>({});
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedFeedback, setSelectedFeedback] = useState<Record<number, "yes" | "no" | null>>({});
   const handleStatusChange = (index: number, newStatus: "done" | "processing" | "exclude") => {
     const updated = [...results];
     const currentStatus = updated[index].status;
@@ -33,7 +43,7 @@ export default function Home() {
     setResults(updated);
   };
 
-  const getStatusBgColor = (status: string) => {
+  const getStatusBgColor = (status?: string) => {
     switch (status) {
       case "done":
         return "bg-blue-100";
@@ -46,7 +56,6 @@ export default function Home() {
     }
   };
 
-  
   useEffect(() => {
     console.log("✅取得したresults:", results);
     if (!Array.isArray(results)) {
@@ -58,40 +67,6 @@ export default function Home() {
       console.log("🟡 結果は空配列です。");
     }
   }, [results]);
-  
-  useEffect(() => {
-    // テスト表示用のダミーデータ
-    const dummyResults = [
-      {
-        company: "ONE",
-        vessel: "NYK OCEANUS",
-        fare: "$850",
-        etd: "2025-04-22",
-        eta: "2025-05-07",
-        schedule_url: "#",
-        raw_response: "ChatGPTが抽出した内容（仮）",
-        status: "none"
-      },
-      {
-        company: "COSCO",
-        vessel: "ONE OLYMPUS",
-        fare: "$780",
-        etd: "2025-04-26",
-        eta: "2025-05-10",
-        schedule_url: "#",
-        raw_response: "ChatGPTが抽出した内容（仮）",
-        status: "none"
-      }
-    ];
-  
-    // フォームなしでレコメンド画面を確認したいときに true にする
-    const testing = true;
-  
-    if (testing) {
-      setResults(dummyResults);
-      setSubmitted(true);
-    }
-  }, []);  
 
   useEffect(() => {
     setAvailableDestinations(DEPARTURE_DESTINATION_MAP[departure] || []);
@@ -128,12 +103,17 @@ export default function Home() {
 
       
       if (res.ok) {
-        const newResults = data.map((item: any) => {
+        const newResults = data.map((item: ScheduleResult) => {
           return {
             ...item,           // ← 元のデータを維持
             status: "none"     // ← 初期状態（まだタグ未選択）
           };
+        }).sort((a: ScheduleResult, b: ScheduleResult) => {
+          const fareA = parseFloat(a.fare.replace(/[^0-9.]/g, ""));
+          const fareB = parseFloat(b.fare.replace(/[^0-9/]/g, ""));
+          return fareA - fareB;
         });
+
         setResults(newResults);  // ← 加工後のデータをセットする
       } else {
         setResults([]);  // ← 明示的に空配列を設定
@@ -168,7 +148,6 @@ export default function Home() {
         })
       });
       setFeedbackSentMap((prev) => ({ ...prev, [index]: true }));
-      setSelectedFeedback((prev) => ({ ...prev, [index]: value }));
     } catch (err) {
       console.error("Feedback送信失敗:", err);
     }
@@ -321,12 +300,12 @@ export default function Home() {
 
           <div className="ml-4 space-y-1 mt-2 text-gray-800">
             <p><strong>船名:</strong> {result.vessel}</p>
-            <p><strong>運賃:</strong> {result.fare}</p>
+            <p><strong>運賃:</strong> {result.fare} <strong>$</strong></p>
             <p><strong>出港日（ETD）:</strong> {result.etd}</p>
             <p><strong>到着予定日（ETA）:</strong> {result.eta}</p>
             <p>
               <a
-                href={result.schedule_url}
+                href={result.schedule_url ?? "#"} // ← fallbackを設定
                 className="text-blue-600 underline"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -398,6 +377,7 @@ export default function Home() {
   </div> 
 
   <Script
+    id="dify-config"
     strategy="afterInteractive"
     dangerouslySetInnerHTML={{
       __html: `
