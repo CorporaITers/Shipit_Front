@@ -109,8 +109,8 @@ export default function Home() {
             status: "none"     // ← 初期状態（まだタグ未選択）
           };
         }).sort((a: ScheduleResult, b: ScheduleResult) => {
-          const fareA = parseFloat(a.fare.replace(/[^0-9.]/g, ""));
-          const fareB = parseFloat(b.fare.replace(/[^0-9/]/g, ""));
+          const fareA = parseFloat(a.fare?.replace(/[^0-9.]/g, "") || "9999999");
+          const fareB = parseFloat(b.fare?.replace(/[^0-9.]/g, "") || "9999999");
           return fareA - fareB;
         });
 
