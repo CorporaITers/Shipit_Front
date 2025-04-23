@@ -188,7 +188,7 @@ export default function Home() {
 
       {/* 検索フォーム全体をカードで囲む*/}
       <div className="w-full lg:w-1/3 p-6 bg-white rounded-xl shadow-md space-y-4 mb-8">
-      <h1 className="text-base font-semibold text-gray-800 bg-blue-100 px-4 py-2 rounded-xl">スケジュール検索（ONE / COSCO対応）</h1>
+      <h1 className="text-base font-semibold text-gray-800 bg-blue-100 px-4 py-2 rounded-xl">スケジュール検索</h1>
 
       {/* 検索フォーム */}
       <div className="mb-4">
@@ -300,7 +300,7 @@ export default function Home() {
 
           <div className="ml-4 space-y-1 mt-2 text-gray-800">
             <p><strong>船名:</strong> {result.vessel}</p>
-            <p><strong>運賃:</strong> {result.fare} <strong>$</strong></p>
+            <p><strong>運賃:</strong> ${result.fare} </p>
             <p><strong>出港日（ETD）:</strong> {result.etd}</p>
             <p><strong>到着予定日（ETA）:</strong> {result.eta}</p>
             <p>
