@@ -400,7 +400,7 @@ export default function Home() {
   <style jsx global>{`
     #dify-chatbot-bubble-button {
       background-color: transparent !important;
-      background-image: url('${process.env.NEXT_PUBLIC_BASE_URL}/dorimochan.png') !important;
+      background-image: url('/dorimochan.png') !important;
       background-size: cover !important;
       background-position: center !important;
       background-repeat: no-repeat !important;
