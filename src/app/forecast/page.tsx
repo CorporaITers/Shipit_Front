@@ -114,6 +114,7 @@ export default function ForecastPage() {
   };
 
   return (
+    <>
     <div className="bg-gray-50 p-6 min-h-screen">
       <h1 className="text-xl font-bold text-blue-900 mb-4 border-b border-blue-200 pb-1">バンニング見込み予測</h1>
 
@@ -221,5 +222,6 @@ export default function ForecastPage() {
         </div>
       )}
     </div>
+    </>
   );
 }
