@@ -103,14 +103,12 @@ export default function Home() {
 
       
       if (res.ok) {
-        const newResults = data.map((item: ScheduleResult) => {
-          return {
-            ...item,           // ← 元のデータを維持
-            status: "none"     // ← 初期状態（まだタグ未選択）
-          };
-        }).sort((a: ScheduleResult, b: ScheduleResult) => {
-          const fareA = parseFloat(a.fare?.replace(/[^0-9.]/g, "") || "9999999");
-          const fareB = parseFloat(b.fare?.replace(/[^0-9.]/g, "") || "9999999");
+        const newResults = data.map((item: ScheduleResult) => ({
+          ...item,           // ← 元のデータを維持
+          status: "none"     // ← 初期状態（まだタグ未選択）
+        })).sort((a: ScheduleResult, b: ScheduleResult) => {
+          const fareA = Number(a.fare ?? Infinity);
+          const fareB = Number(b.fare ?? Infinity);
           return fareA - fareB;
         });
 
