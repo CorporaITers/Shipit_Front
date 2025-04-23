@@ -300,7 +300,7 @@ export default function Home() {
 
           <div className="ml-4 space-y-1 mt-2 text-gray-800">
             <p><strong>船名:</strong> {result.vessel}</p>
-            <p><strong>運賃:</strong> {result.fare} <strong>$</strong></p>
+            <p><strong>運賃:</strong> ${result.fare} </p>
             <p><strong>出港日（ETD）:</strong> {result.etd}</p>
             <p><strong>到着予定日（ETA）:</strong> {result.eta}</p>
             <p>
