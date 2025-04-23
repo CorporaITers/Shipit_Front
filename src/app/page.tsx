@@ -170,18 +170,28 @@ export default function Home() {
   return (
     <>
     {/* ヘッダー */}
-    <header className="bg-[#2f52db] text-white flex items-center px-8 h-[60px] shadow-md">
-      <div className="text-lg font-bold mr-20">DigiTradeX</div>
+    <header className="bg-[#2f52db] text-white flex items-center px-4 h-[60px] shadow-md">
+      <div className="text-[22px] font-bold mr-32">DigiTradeX</div>
         <nav className="flex">
-          <button className="px-6 h-[60px] text-sm hover:bg-white/10 transition">PO読取</button>
-          <button className="px-6 h-[60px] text-sm hover:bg-white/10 transition">一覧</button>
-          <button className="px-6 h-[60px] text-sm bg-[#dce8ff] text-[rgba(0,0,0,0.5)] font-semibold">船ブッキング</button>
+         <a
+          href="https://tech0-gen-8-step4-dtx-pofront-b8dygjdpcgcbg8cd.canadacentral-01.azurewebsites.net/"
+          className="px-6 h-[60px] text-[18px] hover:bg-white/10 transition flex items-center"
+          >
+            PO読取
+        </a>
+        <a
+          href="https://tech0-gen-8-step4-dtx-pofront-b8dygjdpcgcbg8cd.canadacentral-01.azurewebsites.net/po/list"
+          className="px-6 h-[60px] text-[18px] hover:bg-white/10 transition flex items-center"
+        >
+            一覧
+        </a>
+          <button className="px-6 h-[60px] text-[18px] bg-[#dce8ff] text-[rgba(0,0,0,0.8)] font-medium">船ブッキング</button>
           <a
-    href="https://tech0-gen-8-step4-dtx-sbfront-a2dde6enhbghc8bx.canadacentral-01.azurewebsites.net/forecast"
-    className="px-6 h-[60px] text-sm hover:bg-white/10 transition flex items-center"
-  >
-    バンニング見込み
-  </a>
+            href="https://tech0-gen-8-step4-dtx-sbfront-a2dde6enhbghc8bx.canadacentral-01.azurewebsites.net/forecast"
+            className="px-6 h-[60px] text-[18px] hover:bg-white/10 transition flex items-center"
+          >
+            バンニング見込み
+          </a>
         </nav>
     </header>
 
