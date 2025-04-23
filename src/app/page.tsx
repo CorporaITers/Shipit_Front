@@ -22,6 +22,8 @@ const DEPARTURE_DESTINATION_MAP: Record<string, string[]> = {
   Tokyo: ["Shanghai", "Singapore", "Los Angeles", "Rotterdam", "Hamburg", "Dubai", "New York", "Hong Kong", "Busan", "Sydney"]
 };
 
+
+
 export default function Home() {
   const [departure, setDeparture] = useState("");
   const [destination, setDestination] = useState("");
@@ -160,7 +162,7 @@ export default function Home() {
     if (e.target.value) setEtd("");
   };
 
-  const handleEtdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleEtdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEtd(e.target.value);
     if (e.target.value) setEta("");
   };
@@ -174,7 +176,12 @@ export default function Home() {
           <button className="px-6 h-[60px] text-sm hover:bg-white/10 transition">PO読取</button>
           <button className="px-6 h-[60px] text-sm hover:bg-white/10 transition">一覧</button>
           <button className="px-6 h-[60px] text-sm bg-[#dce8ff] text-[rgba(0,0,0,0.5)] font-semibold">船ブッキング</button>
-          <button className="px-6 h-[60px] text-sm hover:bg-white/10 transition">バンニング見込み</button>
+          <a
+    href="https://tech0-gen-8-step4-dtx-sbfront-a2dde6enhbghc8bx.canadacentral-01.azurewebsites.net/forecast"
+    className="px-6 h-[60px] text-sm hover:bg-white/10 transition flex items-center"
+  >
+    バンニング見込み
+  </a>
         </nav>
     </header>
 
@@ -393,7 +400,7 @@ export default function Home() {
   <style jsx global>{`
     #dify-chatbot-bubble-button {
       background-color: transparent !important;
-      background-image: url('/dorimochan.png') !important;
+      background-image: url('${process.env.NEXT_PUBLIC_BASE_URL}/dorimochan.png') !important;
       background-size: cover !important;
       background-position: center !important;
       background-repeat: no-repeat !important;
