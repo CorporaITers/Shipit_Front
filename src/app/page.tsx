@@ -14,8 +14,8 @@ const DEPARTURE_DESTINATION_MAP: Record<string, string[]> = {
 export default function Home() {
   const [departure, setDeparture] = useState("");
   const [destination, setDestination] = useState("");
-  const [eta, setEta] = useState("");
   const [etd, setEtd] = useState("");
+  const [eta, setEta] = useState("");
   const [availableDestinations, setAvailableDestinations] = useState<string[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [results, setResults] = useState<any[]>([]);
@@ -53,9 +53,9 @@ export default function Home() {
     setShowRawMap({});
     setIsLoading(true); // ← 追加
 
-    if (!eta && !etd) {
+    if (!etd && !eta) {
       setIsLoading(false); // ← エラーでも必ずfalseに
-      setError("ETAまたはETDのいずれかを入力してください。");
+      setError("ETDまたはETAのいずれかを入力してください。");
       return;
     }
 
@@ -66,8 +66,8 @@ export default function Home() {
         body: JSON.stringify({
           departure_port: departure,
           destination_port: destination,
-          eta_date: eta || null,
-          etd_date: etd || null
+          etd_date: etd || null,
+          eta_date: eta || null
         })
       });
       const data = await res.json();
