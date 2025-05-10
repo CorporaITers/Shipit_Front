@@ -27,8 +27,8 @@ const DEPARTURE_DESTINATION_MAP: Record<string, string[]> = {
 export default function Home() {
   const [departure, setDeparture] = useState("");
   const [destination, setDestination] = useState("");
-  const [eta, setEta] = useState("");
   const [etd, setEtd] = useState("");
+  const [eta, setEta] = useState("");
   const [availableDestinations, setAvailableDestinations] = useState<string[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [results, setResults] = useState<ScheduleResult[]>([]);
@@ -83,9 +83,9 @@ export default function Home() {
     setShowRawMap({});
     setIsLoading(true); // ← 追加
 
-    if (!eta && !etd) {
+    if (!etd && !eta) {
       setIsLoading(false); // ← エラーでも必ずfalseに
-      setError("ETAまたはETDのいずれかを入力してください。");
+      setError("ETDまたはETAのいずれかを入力してください。");
       return;
     }
 
@@ -96,8 +96,8 @@ export default function Home() {
         body: JSON.stringify({
           departure_port: departure,
           destination_port: destination,
-          eta_date: eta || null,
-          etd_date: etd || null
+          etd_date: etd || null,
+          eta_date: eta || null
         })
       });
       const data = await res.json();
@@ -265,7 +265,7 @@ export default function Home() {
       </div>
 
      {/* 結果表示 */}
-<div className="w-full lg:w-2/3 p-6 bg-white rounded-xl shadow-md p-4 mb-8">
+<div className="w-full lg:w-2/3 px-6 bg-white rounded-xl shadow-md py-4 mb-8">
   <h2 className="text-base font-semibold text-gray-800 bg-blue-100 px-4 py-2 rounded-xl">レコメンド</h2>
 
   <div className="mt-4 space-y-4">
