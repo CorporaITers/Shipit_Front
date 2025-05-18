@@ -3,7 +3,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import Script from 'next/script';
-import { Html, Head, Main, NextScript } from "next/document";
 
 type ScheduleResult = {
   company: string;
@@ -23,7 +22,7 @@ const DEPARTURE_DESTINATION_MAP: Record<string, string[]> = {
   Tokyo: ["Shanghai", "Singapore", "Los Angeles", "Rotterdam", "Hamburg", "Dubai", "New York", "Hong Kong", "Busan", "Sydney"]
 };
 
-const nonce = Buffer.from(Date.now().toString()).toString("base64");
+
 
 export default function Home() {
   const [departure, setDeparture] = useState("");
@@ -435,31 +434,6 @@ export default function Home() {
     }
   `}</style>
 
-<Html>
-      <Head>
-        <meta httpEquiv="Content-Security-Policy" content={`script-src 'self' 'nonce-${nonce}';`} />
-      </Head>
-      <body>
-        <Main />
-        <NextScript nonce={nonce} />
-        <script
-          nonce={nonce}
-          id="dify-config"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.difyChatbotConfig = {
-                token: 'o5eR4Ibgrs8MWzXD'
-              };
-            `,
-          }}
-        />
-        <script
-          nonce={nonce}
-          src="https://udify.app/embed.min.js"
-          defer
-        ></script>
-      </body>
-    </Html>
   </>
   );
 }
