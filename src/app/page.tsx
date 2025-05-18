@@ -394,6 +394,7 @@ export default function Home() {
   <Script
     id="dify-config"
     strategy="afterInteractive"
+    nonce="M2ZkNjM3YTctMWI2Ni00MzE0LTgxMWYtZTI5MTc3NjA5ZWVk"
     dangerouslySetInnerHTML={{
       __html: `
         window.difyChatbotConfig = {
@@ -405,6 +406,7 @@ export default function Home() {
   <Script
     src="https://udify.app/embed.min.js"
     id="o5eR4Ibgrs8MWzXD"
+    nonce="M2ZkNjM3YTctMWI2Ni00MzE0LTgxMWYtZTI5MTc3NjA5ZWVk"
     defer
   />
   <style jsx global>{`
